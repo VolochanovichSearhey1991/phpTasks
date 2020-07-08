@@ -4,7 +4,7 @@
 		
 		for ($num = $startInterval; $num  <= $finishInterval; $num++) {
 			
-			if (isEven($num) && (isIncreaseSequence($num) || isDecreaseSequence($num))) {
+			if (isEven($num) && isIncDecSequence($num)) {
 				echo $num."</br>";
 			}
 			
@@ -12,51 +12,60 @@
 		
 	}
 
-	function isIncreaseSequence(int $number): bool {
-		$prevDigit = 10;
-		$digCount = 0;
+	function isIncreaseSequence(int $number, int $nextDigit): bool {
 		
 		while ($number >= 1) {
 			
 			$digit = $number % 10;
 			$number = (int)($number/10);
-			$digCount++;
 			
-			if ($digit >= $prevDigit) {
+			if ($digit >= $nextDigit) {
 				return false;
 			} 
 			
-			$prevDigit = $digit;
+			$nextDigit = $digit;
 		}
-		
-		if ($digCount > 1) {
-			return true;
-		}
-		
-		return false;
+
+		return true;
 	}
 	
-	function isDecreaseSequence(int $number): bool {
-		$prevDigit = -1;
-		$digCount = 0;
+	function isDecreaseSequence(int $number, int $nextDigit): bool {
 		
 		while ($number >= 1) {
 			
 			$digit = $number % 10;
 			$number = (int)($number/10);
-			$digCount++;
-			if ($digit <= $prevDigit) {
+			if ($digit <= $nextDigit) {
 				return false;
 			} 
 			
-			$prevDigit = $digit;
+			$nextDigit = $digit;
 		}
 		
-		if ($digCount > 1) {
-			return true;
+		return true;
+	}
+	
+	function isIncDecSequence(int $number): bool {
+		$prevDigit = $number % 10;
+		$number = (int)($number/10);
+		
+		if ($number === 0) {
+			return false;
 		}
 		
-		return false;
+		$nextDigit = $number % 10;
+		$number = (int)($number/10);
+		return kindOfSequence($number, $nextDigit, $prevDigit);
+	}
+	
+	function kindOfSequence(int $number, int $nextDigit, int $prevDigit): bool {
+		if ($nextDigit > $prevDigit) {
+			return isDecreaseSequence($number, $nextDigit);
+		} elseif ($nextDigit < $prevDigit) {
+			return isIncreaseSequence($number, $nextDigit);
+		} else {
+			return false;
+		}
 	}
 	
 	function isEven(int $number): bool {
@@ -68,5 +77,4 @@
 		return false;
 	}
 	
-	dispAllNumbers ();
-?>
+	dispAllNumbers();
