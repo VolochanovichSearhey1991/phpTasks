@@ -1,5 +1,17 @@
 <?php
 
+	function dispAllNumbers (int $startInterval = 1000, int $finishInterval = 9999) {
+		
+		for ($num = $startInterval; $num  <= $finishInterval; $num++) {
+			
+			if (!isContainsEqualDigits($num)) {
+				echo $num."</br>";
+			}
+			
+		}
+		
+	}
+
 	function isContainsEqualDigits(int $number): bool {
 		$number = getAbsolute($number);
 
@@ -44,10 +56,6 @@
 		return $number;
 	}
 	
-	//Пример
-	if (isContainsEqualDigits(23489)) {
-		echo 'contains!';
-	} else {
-		echo 'does not contains';
-	}
+	dispAllNumbers ();
+
 ?>
