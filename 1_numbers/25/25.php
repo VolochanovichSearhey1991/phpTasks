@@ -57,6 +57,6 @@
 		
 		return $factorial;
 	}
-	
+	                                       
 	echo getFactorionsData(0, 40700);
 ?>
